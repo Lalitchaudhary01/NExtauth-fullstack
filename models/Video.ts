@@ -2,7 +2,7 @@ import mongoose, { Schema, model, models } from "mongoose";
 
 export const VIDEO_DIMENSIONS = {
   width: 1080,
-  height: 1920,
+  heigth: 1920,
 } as const;
 
 export interface IVideo {
@@ -11,14 +11,12 @@ export interface IVideo {
   description: string;
   videoUrl: string;
   thumbnailUrl: string;
-  controls: boolean;
-  transfomation?: {
-    width?: number;
-    height?: number;
+  controls?: boolean;
+  transformation?: {
+    height: number;
+    width: number;
     quality?: number;
   };
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 const videoSchema = new Schema<IVideo>(
   {
@@ -27,9 +25,9 @@ const videoSchema = new Schema<IVideo>(
     videoUrl: { type: String, required: true },
     thumbnailUrl: { type: String, required: true },
     controls: { type: Boolean, default: true },
-    transfomation: {
+    transformation: {
+      height: { type: Number, default: VIDEO_DIMENSIONS.heigth },
       width: { type: Number, default: VIDEO_DIMENSIONS.width },
-      height: { type: Number, default: VIDEO_DIMENSIONS.height },
       quality: { type: Number, min: 1, max: 100 },
     },
   },
@@ -37,5 +35,7 @@ const videoSchema = new Schema<IVideo>(
     timestamps: true,
   }
 );
+
 const Video = models?.Video || model<IVideo>("Video", videoSchema);
+
 export default Video;
