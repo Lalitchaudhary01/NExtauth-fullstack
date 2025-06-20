@@ -53,17 +53,18 @@ const FileUpload = ({ onSuccess, onProgress, fileType }: FileUploadProps) => {
         expire: auth.expire,
         token: auth.token,
         onProgress: (event) => {
-          if (event.lengthComputable && onProgress) {
+          if(event.lengthComputable && onProgress){
             const percent = (event.loaded / event.total) * 100;
-            onProgress(Math.round(percent));
+            onProgress(Math.round(percent))
           }
         },
+        
       });
-      onSuccess(res);
+      onSuccess(res)
     } catch (error) {
-      console.error("Upload failed", error);
+        console.error("Upload failed", error)
     } finally {
-      setUploading(false);
+        setUploading(false)
     }
   };
 
@@ -74,7 +75,6 @@ const FileUpload = ({ onSuccess, onProgress, fileType }: FileUploadProps) => {
         accept={fileType === "video" ? "video/*" : "image/*"}
         onChange={handleFileChange}
         title={fileType === "video" ? "Upload a video file" : "Upload an image file"}
-        placeholder={fileType === "video" ? "Choose a video file" : "Choose an image file"}
       />
       {uploading && <span>Loading....</span>}
     </>
